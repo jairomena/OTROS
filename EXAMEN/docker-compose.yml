@@ -1,0 +1,66 @@
+version: '3'
+services:
+  postgres-sql:
+    image: postgres:alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: distribuida
+#    ports:
+#      - 5433:5432
+  proxy:
+    image: traefik:v2.9.6
+    command: --api.insecure=true --providers.docker
+    ports:
+      - "80:80"
+      - "8080:8080"
+    expose:
+      - 80
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+  clients-service:
+    build: ./pd_examen
+    platform: linux/amd64
+    environment:
+      DB_CONNECTION_USER: postgres
+      DB_CONNECTION_PASSWORD: postgres
+      DB_CONNECTION_URL: jdbc:postgresql://postgres-sql:5432/examen
+      SERVER_PORT: 7001
+    depends_on:
+      - postgres-sql
+    deploy:
+      replicas: 1
+    expose:
+      - 7001
+    labels:
+      - "traefik.http.routers.books.rule=PathPrefix(`/app1`)"
+      - "traefik.http.middlewares.books.stripprefix.prefixes=/app1"
+      - "traefik.http.routers.books.middlewares=books"
+  products-service:
+    build: ./pd_producto
+    platform: linux/amd64
+    environment:
+      DB_CONNECTION_USER: postgres
+      DB_CONNECTION_PASSWORD: postgres
+      DB_CONNECTION_URL: jdbc:postgresql://postgres-sql:5432/examen
+      SERVER_PORT: 7002
+    depends_on:
+      - postgres-sql
+    deploy:
+      replicas: 1
+    expose:
+      - 7002
+  orders-service:
+    build: ./pd_ordencompra
+    platform: linux/amd64
+    environment:
+      DB_CONNECTION_USER: postgres
+      DB_CONNECTION_PASSWORD: postgres
+      DB_CONNECTION_URL: jdbc:postgresql://postgres-sql:5432/examen
+      SERVER_PORT: 7003
+    depends_on:
+      - postgres-sql
+    deploy:
+      replicas: 1
+    expose:
+      - 7003

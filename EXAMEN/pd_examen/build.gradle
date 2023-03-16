@@ -1,0 +1,37 @@
+plugins {
+    id 'java'
+    id "io.freefair.lombok" version "6.6.1"
+    id 'io.quarkus' version '2.16.1.Final'
+}
+
+group 'com.distribuida'
+version '1.0-SNAPSHOT'
+
+ext {
+    quarkusVersion = '2.16.1.Final'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation enforcedPlatform("io.quarkus.platform:quarkus-bom:${quarkusVersion}")
+    implementation 'io.quarkus:quarkus-hibernate-orm-panache'
+    implementation 'io.quarkus:quarkus-jdbc-postgresql'
+    implementation 'io.quarkus:quarkus-arc'
+    implementation 'io.quarkus:quarkus-hibernate-orm'
+    implementation 'io.quarkus:quarkus-resteasy'
+    implementation 'io.quarkus:quarkus-resteasy-jackson'
+//    implementation 'io.quarkus:quarkus-flyway'
+    implementation("io.quarkus:quarkus-smallrye-openapi")
+    // https://mvnrepository.com/artifact/io.quarkus/quarkus-smallrye-health
+    implementation 'io.quarkus:quarkus-smallrye-health:2.16.3.Final'
+    // https://mvnrepository.com/artifact/io.quarkus/quarkus-smallrye-fault-tolerance
+    implementation 'io.quarkus:quarkus-smallrye-fault-tolerance:2.16.3.Final'
+
+}
+
+test {
+    useJUnitPlatform()
+}

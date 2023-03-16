@@ -1,0 +1,49 @@
+plugins {
+    id 'java'
+    id "io.freefair.lombok" version "6.6.1"
+    id 'io.quarkus' version '2.16.1.Final'
+}
+
+group 'com.distribuida'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    quarkusVersion = '2.16.1.Final'
+}
+
+dependencies {
+    implementation enforcedPlatform("io.quarkus.platform:quarkus-bom:${quarkusVersion}")
+    implementation 'io.quarkus:quarkus-hibernate-orm-panache'
+    implementation 'io.quarkus:quarkus-jdbc-postgresql'
+    implementation 'io.quarkus:quarkus-arc'
+    implementation 'io.quarkus:quarkus-hibernate-orm'
+    implementation 'io.quarkus:quarkus-resteasy-jackson'
+//    implementation 'io.quarkus:quarkus-flyway'
+    implementation("io.quarkus:quarkus-smallrye-openapi")
+
+    // https://mvnrepository.com/artifact/io.quarkus/quarkus-rest-client-jackson
+    implementation 'io.quarkus:quarkus-rest-client-jackson:2.16.3.Final'
+
+    // https://mvnrepository.com/artifact/io.quarkus/quarkus-rest-client
+    implementation 'io.quarkus:quarkus-rest-client:2.16.3.Final'
+
+
+
+    // https://mvnrepository.com/artifact/io.quarkus/quarkus-smallrye-health
+    implementation 'io.quarkus:quarkus-smallrye-health:2.16.3.Final'
+
+    // https://mvnrepository.com/artifact/io.quarkus/quarkus-smallrye-fault-tolerance
+    implementation 'io.quarkus:quarkus-smallrye-fault-tolerance:2.16.3.Final'
+
+    // https://mvnrepository.com/artifact/org.eclipse.microprofile.rest.client/microprofile-rest-client-api
+    implementation 'org.eclipse.microprofile.rest.client:microprofile-rest-client-api:3.0.1'
+
+}
+
+test {
+    useJUnitPlatform()
+}

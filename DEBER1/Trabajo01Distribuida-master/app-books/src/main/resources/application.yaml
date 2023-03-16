@@ -1,0 +1,6 @@
+db:
+  source: jdbc
+  connection:
+    url: jdbc:postgresql://localhost:5433/distribuida
+    username: postgres
+    password: postgres

@@ -1,0 +1,3 @@
+rem Generando y subiendo imagen docker
+
+git clone https://github.com/Luis-Chisiquinga/Trabajo01Distribuida.git && cd Trabajo01Distribuida && cd app-cliente-spark && gradlew clean && gradlew copyLibs && gradlew jar && docker build -t luischisiquinga/app-cliente-spark:1.0.0 . && docker push luischisiquinga/app-cliente-spark:1.0.0 && cd .. && cd app-books && gradlew clean && gradlew copyLibs && gradlew jar && docker build -t luischisiquinga/app-books:1.0.0 . && docker push luischisiquinga/app-books:1.0.0 && cd .. && cd app-authors && gradlew clean && gradlew quarkusBuild && docker build -t luischisiquinga/app-authors:1.0.0 . && docker push luischisiquinga/app-authors:1.0.0 && cd .. && docker-compose up
